@@ -2,6 +2,7 @@
 <html>
     <!-- Init and CSS-->
     <head>
+        <meta charset="utf-8"/>
         <style>
             body {
                 background-color: #4b5320;
@@ -10,11 +11,15 @@
             }
 
             .overlay {
-                background-color: #b29d69;
+                margin: auto;
+                background-color: #b8b894;
                 border-style: solid;
-                border-color: #b29d69;
-                width: 80%;
-                height: 80%;
+                border-color: #ffffff;
+                border-width: thin;
+                width: 95%;
+                height: 80vh;
+                padding-left: 2%;
+                color: black;
             }
 
             .title {
@@ -23,11 +28,14 @@
 
         </style>
 
-        <script type="javascript.js">
+        <script>
             //for scripting
-            console.log("Hello world\n");
+            var count = 1;
+            function foo(){
+                document.getElementById("funclick").innerHTML = "You have clicked: "+count+" times.";
+                count = count+1;
+            }
         </script>
-
     </head>
 
     <!-- Core code and website functionality -->
@@ -38,6 +46,8 @@
 
         <div class="overlay">
             <p> Welcome to this (in progress) calculator!</p>
+            <p id= "funclick"> You have clicked: 0 times. </p>
+            <button onclick="foo()"> Click Me </button>
         </div>
 
     </body>
