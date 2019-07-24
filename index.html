@@ -35,6 +35,10 @@
                 document.getElementById("funclick").innerHTML = "You have clicked: "+count+" times.";
                 count = count+1;
             }
+	    function hello(){
+	    console.log("Hello World!");
+	    alert("Hello World!");
+	    }
         </script>
     </head>
 
@@ -48,6 +52,7 @@
             <p> Welcome to this (in progress) calculator!</p>
             <p id= "funclick"> You have clicked: 0 times. </p>
             <button onclick="foo()"> Click Me </button>
+	    <button onclick="hello()"> Say Hello </button>
         </div>
 
     </body>
