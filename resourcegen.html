@@ -28,10 +28,44 @@
                 padding-left: 2%;
                 color: black;
             }
+			/* holds information about the input */
+			.input {
+				float: left;
+				border-style: none; /* construction purposes */
+				width: 43%;
+				height: 90%;
+				padding-left: 2%;
+				padding-right: 4%;
+				padding-top: 30px;
+			}
+
+			/* holds information about the output */
+			.output {
+				float: left;
+				border-style: none; /* construction purposes */
+				width: 43%;
+				height: 90%;
+				padding-left: 2%;
+				padding-right: 4%;
+				padding-top: 30px;
+			}
         </style>
 
         <script>
-			//currently no scripts
+			//global variables
+			var resource_count = 0;
+			var ic_level = 0;
+
+			function calculate_result(){
+				//get the values in the input fields identified by Id
+				resource_count = document.getElementById("resourceProvInput").value;
+				ic_level = document.getElementById("industrialComplexLevel").value;
+
+				//input is taken as a textfield, so convert it to an int using parseInt
+				resource_count = parseInt(resource_count);
+
+				alert("resources: "+resource_count+"\nic level: "+ic_level);
+			}
         </script>
 
     </head>
@@ -43,7 +77,38 @@
         </div>
 
 		<div class="overlay">
+			<div class="input">
+				<a href="./index.html">
+					<button>Back</button>
+				</a>
+				<p><b><font size="+1"> Resource Calculator </font></b></p>
 
+				<!-- form for user input of resource count-->
+				Resource per day generated in province:<br>
+				<form>
+					<input type="text" id="resourceProvInput"><br>
+				</form>
+
+				<br>Industrial complex level:<br>
+				<select id="industrialComplexLevel">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+
+				<br><br>
+				<button onclick="calculate_result()"> Calculate </button>
+
+			</div>
+
+			<div class="output">
+				<br>
+				<p><b><font size="+1"> Results </font></b></p>
+
+			</div>
         </div>
 
     </body>
