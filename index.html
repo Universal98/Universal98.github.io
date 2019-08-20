@@ -4,12 +4,19 @@
     <head>
         <meta charset="utf-8"/>
         <style>
+			/* the body is the majority of the webpage. */
             body {
                 background-color: #4b5320;
                 font-family: "Georgia", serif;
                 color: #ffffff;
             }
 
+			/* title is the name of the calculator */
+			.title {
+				text-align: center;
+			}
+
+			/* overlay is the 'paper' color above the background */
             .overlay {
                 margin: auto;
                 background-color: #b8b894;
@@ -22,24 +29,34 @@
                 color: black;
             }
 
-            .title {
-                text-align: center;
-            }
+			/* holds information about the calculator */
+			.about {
+				float: left;
+				border-style: none; /* construction purposes */
+				width: 43%;
+				height: 90%;
+				padding-left: 2%;
+				padding-right: 4%;
+				padding-top: 30px;
+			}
+
+			/* holds links to the actual calculator */
+			.menu {
+				float: left;
+				border-style: none; /* construction purposes */
+				width: 43%;
+				height: 90%;
+				padding-left: 2%;
+				padding-right: 4%;
+				padding-top: 30px;
+			}
 
         </style>
 
         <script>
-            //for scripting
-            var count = 1;
-            function foo(){
-                document.getElementById("funclick").innerHTML = "You have clicked: "+count+" times.";
-                count = count+1;
-            }
-	    function hello(){
-	    console.log("Hello World!");
-	    alert("Hello World!");
-	    }
+			//currently no scripts
         </script>
+
     </head>
 
     <!-- Core code and website functionality -->
@@ -49,10 +66,27 @@
         </div>
 
         <div class="overlay">
-            <p> Welcome to this (in progress) calculator!</p>
-            <p id= "funclick"> You have clicked: 0 times. </p>
-            <button onclick="foo()"> Click Me </button>
-	    <button onclick="hello()"> Say Hello </button>
+			<div class="about">
+				<p><b><font size="+1"> About </font></b></p>
+				<p>
+					Call of War Calculator is a simple calculator app developed by
+					two students with not enough free time on their hands. One is
+					a comp sci student who can barely code or make websites and the
+					other is a physics student who probably knows more comp sci than
+					the actual comp sci student!
+				</p>
+			</div>
+
+			<div class="menu">
+				<p><b><font size="+1"> Calculator Menu </font></b></p>
+				<p>
+					Resource calculator
+					<br>
+					<a href="./resourcegen.html">
+						<button>Go</button>
+					</a>
+				</p>
+			</div>
         </div>
 
     </body>
