@@ -54,17 +54,35 @@
         <script>
 			//global variables
 			var resource_count = 0;
-			var ic_level = 0;
+			var ic_level = 0, ic_level_new = 0;
+			var inf_level = 0, inf_level_new = 0;
+			var nvl_level = 0, nvl_level_new = 0;
+			var ic_factor = 0;
+			var inf_factor = 0;
+			var nvl_factor = 0;
+			var multiplier = 0;
 
 			function calculate_result(){
 				//get the values in the input fields identified by Id
 				resource_count = document.getElementById("resourceProvInput").value;
 				ic_level = document.getElementById("industrialComplexLevel").value;
+				ic_level_new = document.getElementById("industrialComplexLevelNew").value;
+				inf_level = document.getElementById("infrastructureLevel").value;
+				inf_level_new = document.getElementById("infrastructureLevelNew").value;
+				nvl_level = document.getElementById("navalBaseLevel").value;
+				nvl_level_new = document.getElementById("navalBaseLevelNew").value;
+				multiplier = 1;
 
 				//input is taken as a textfield, so convert it to an int using parseInt
 				resource_count = parseInt(resource_count);
 
-				alert("resources: "+resource_count+"\nic level: "+ic_level);
+				//calculate the net changes to the levels
+				ic_factor = ic_level-ic_level_new;
+				inf_factor = inf_level-inf_level_new;
+				nvl_factor = nvl_level-nvl_level_new;
+
+				alert("ic upgrade: "+ic_factor+" inf upgrade: "+inf_factor+" nvl upgrade:"+nvl_factor);
+
 			}
         </script>
 
@@ -89,7 +107,7 @@
 					<input type="text" id="resourceProvInput"><br>
 				</form>
 
-				<br>Industrial complex level:<br>
+				<br><br>Industrial complex level:<br>
 				<select id="industrialComplexLevel">
 					<option>0</option>
 					<option>1</option>
@@ -97,6 +115,48 @@
 					<option>3</option>
 					<option>4</option>
 					<option>5</option>
+				</select>
+
+				<br>Industrial complex level (new):<br>
+				<select id="industrialComplexLevelNew">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+
+				<br><br>Infrastructure level:<br>
+				<select id="infrastructureLevel">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+				</select>
+
+				<br>Infrastructure level (new):<br>
+				<select id="infrastructureLevelNew">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+				</select>
+
+				<br><br>Naval base level:<br>
+				<select id="navalBaseLevel">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+				</select>
+
+				<br>Naval base level (new):<br>
+				<select id="navalBaseLevelNew">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
 				</select>
 
 				<br><br>
@@ -107,6 +167,8 @@
 			<div class="output">
 				<br>
 				<p><b><font size="+1"> Results </font></b></p>
+
+				<p id="reportResult"> The province produces 0 resource units.</p>
 
 			</div>
         </div>
