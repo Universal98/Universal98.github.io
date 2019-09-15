@@ -54,42 +54,74 @@
         <script>
 			//global variables
 			var resource_count = 0;
-			var ic_level = 0, ic_level_new = 0;
-			var inf_level = 0, inf_level_new = 0;
-			var nvl_level = 0, nvl_level_new = 0;
-			var ic_factor = 0;
-			var inf_factor = 0;
-			var nvl_factor = 0;
+			var resource_old = 0;
+			var resource_new = 0;
+			var total_resource = 0;
+			var ic_lvl = 0, ic_lvl_new = 0;
+			var inf_lvl = 0, inf_lvl_new = 0;
+			var nvl_lvl = 0, nvl_lvl_new = 0;
 			var multiplier = 0;
+			var indstrComp = new Array(); 	//array of boosts per level
+			var infra = new Array();		//array of boosts per level
+			var nvlBase = new Array();		//array of boosts per level
+
+			function init_boosts(){
+				//boosts provided by IC
+				indstrComp.push(0);
+				indstrComp.push(0.10);
+				indstrComp.push(0.20);
+				indstrComp.push(0.30);
+				indstrComp.push(0.40);
+				indstrComp.push(0.50);
+				//boosts provided by Infra
+				infra.push(0);
+				infra.push(0.10);
+				infra.push(0.30);
+				infra.push(0.50);
+				//boosts provided by NVB
+				nvlBase.push(0);
+				nvlBase.push(0.05);
+				nvlBase.push(0.18);
+				nvlBase.push(0.30);
+
+				/*
+					Programmer's rant: I really wanted to just calculate the boosts
+					using a linear function, but since some of the values didn't perfectly
+					scale linearly, I have to manually store the data here.
+					Pain in the butt!
+				*/
+			}
 
 			function calculate_result(){
 				//get the values in the input fields identified by Id
 				resource_count = document.getElementById("resourceProvInput").value;
-				ic_level = document.getElementById("industrialComplexLevel").value;
-				ic_level_new = document.getElementById("industrialComplexLevelNew").value;
-				inf_level = document.getElementById("infrastructureLevel").value;
-				inf_level_new = document.getElementById("infrastructureLevelNew").value;
-				nvl_level = document.getElementById("navalBaseLevel").value;
-				nvl_level_new = document.getElementById("navalBaseLevelNew").value;
-				multiplier = 1;
+				ic_lvl = document.getElementById("industrialComplexLevel").value;
+				ic_lvl_new = document.getElementById("industrialComplexLevelNew").value;
+				inf_lvl = document.getElementById("infrastructureLevel").value;
+				inf_lvl_new = document.getElementById("infrastructureLevelNew").value;
+				nvl_lvl = document.getElementById("navalBaseLevel").value;
+				nvl_lvl_new = document.getElementById("navalBaseLevelNew").value;
 
 				//input is taken as a textfield, so convert it to an int using parseInt
 				resource_count = parseInt(resource_count);
 
 				//calculate the net changes to the levels
-				ic_factor = ic_level-ic_level_new;
-				inf_factor = inf_level-inf_level_new;
-				nvl_factor = nvl_level-nvl_level_new;
+				resource_old = resource_count*(1+indstrComp[ic_lvl]+infra[inf_lvl]+nvlBase[nvl_lvl]);
+				resource_new = resource_count*(1+indstrComp[ic_lvl_new]+infra[inf_lvl_new]+nvlBase[nvl_lvl_new]);
+				total_resource = resource_new-resource_old;
 
-				alert("ic upgrade: "+ic_factor+" inf upgrade: "+inf_factor+" nvl upgrade:"+nvl_factor);
 
+				//display results
+				document.getElementById("oldProduction").innerHTML = "The province previously produces <b>"+resource_old.toFixed(2)+"</b> resource units.";
+				document.getElementById("newProduction").innerHTML = "The province will produce <b>"+resource_new.toFixed(2)+"</b> resource units.";
+				document.getElementById("changeProduction").innerHTML = "The difference in production is <b>"+total_resource.toFixed(2)+"</b> resource units.";
 			}
         </script>
 
     </head>
 
     <!-- Core code and website functionality -->
-    <body>
+    <body onload="init_boosts()">
         <div class="title">
             <h1> Call of War <br> Calculator </h1>
         </div>
@@ -168,7 +200,9 @@
 				<br>
 				<p><b><font size="+1"> Results </font></b></p>
 
-				<p id="reportResult"> The province produces 0 resource units.</p>
+				<p id="oldProduction"> The province previously produces <b>0</b> resource units.</p>
+				<p id="newProduction"> The province will produce <b>0</b> resource units.</p>
+				<p id="changeProduction"> The difference in production is <b>0</b> resource units.</p>
 
 			</div>
         </div>
