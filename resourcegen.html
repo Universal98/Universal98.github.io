@@ -56,10 +56,12 @@
 			var resource_count = 0;
 			var resource_old = 0;
 			var resource_new = 0;
-			var total_resource = 0;
+			var resource_dift = 0;
+			var resource_difn = 0;
 			var ic_lvl = 0, ic_lvl_new = 0;
 			var inf_lvl = 0, inf_lvl_new = 0;
 			var nvl_lvl = 0, nvl_lvl_new = 0;
+			var diff_sum = 0;
 			var multiplier = 0;
 			var indstrComp = new Array(); 	//array of boosts per level
 			var infra = new Array();		//array of boosts per level
@@ -105,16 +107,30 @@
 				//input is taken as a textfield, so convert it to an int using parseInt
 				resource_count = parseInt(resource_count);
 
-				//calculate the net changes to the levels
-				resource_old = resource_count*(1+indstrComp[ic_lvl]+infra[inf_lvl]+nvlBase[nvl_lvl]);
-				resource_new = resource_count*(1+indstrComp[ic_lvl_new]+infra[inf_lvl_new]+nvlBase[nvl_lvl_new]);
-				total_resource = resource_new-resource_old;
+				//calculate the original province generation
+				diff_sum = indstrComp[ic_lvl] + infra[inf_lvl] + nvlBase[nvl_lvl];
+				/*
+					let O be the original generation, and C be the current generation.
+					we have x, which is the scaling factor such that Ox = C.
+					=> O = N/x
+				*/
+				if(diff_sum!=0){
+					resource_old = (resource_count/(diff_sum+1));
+				} else {
+					resource_old = resource_count;
+				}
+				//calculate the new resource generation
+				resource_new = (resource_old*(1+indstrComp[ic_lvl_new]+infra[inf_lvl_new]+nvlBase[nvl_lvl_new]));
 
+				//calculate the difference
+				resource_dift = resource_new - resource_old;
+				resource_difn = resource_new - resource_count;
 
 				//display results
-				document.getElementById("oldProduction").innerHTML = "The province previously produces <b>"+resource_old.toFixed(2)+"</b> resource units.";
+				document.getElementById("oldProduction").innerHTML = "The province originally produce <b>"+resource_old.toFixed(2)+"</b> resource units.";
 				document.getElementById("newProduction").innerHTML = "The province will produce <b>"+resource_new.toFixed(2)+"</b> resource units.";
-				document.getElementById("changeProduction").innerHTML = "The difference in production is <b>"+total_resource.toFixed(2)+"</b> resource units.";
+				document.getElementById("changeProductionT").innerHTML = "The new upgrades produce <b>"+resource_dift.toFixed(2)+"</b> more resource units than the original.";
+				document.getElementById("changeProductionN").innerHTML = "The new upgrades produce <b>"+resource_difn.toFixed(2)+"</b> more resource units than the current.";
 			}
         </script>
 
@@ -139,7 +155,7 @@
 					<input type="text" id="resourceProvInput"><br>
 				</form>
 
-				<br><br>Industrial complex level:<br>
+				<br><br>Industrial complex level (now):<br>
 				<select id="industrialComplexLevel">
 					<option>0</option>
 					<option>1</option>
@@ -159,7 +175,7 @@
 					<option>5</option>
 				</select>
 
-				<br><br>Infrastructure level:<br>
+				<br><br>Infrastructure level (now):<br>
 				<select id="infrastructureLevel">
 					<option>0</option>
 					<option>1</option>
@@ -175,7 +191,7 @@
 					<option>3</option>
 				</select>
 
-				<br><br>Naval base level:<br>
+				<br><br>Naval base level (now):<br>
 				<select id="navalBaseLevel">
 					<option>0</option>
 					<option>1</option>
@@ -200,9 +216,10 @@
 				<br>
 				<p><b><font size="+1"> Results </font></b></p>
 
-				<p id="oldProduction"> The province previously produces <b>0</b> resource units.</p>
+				<p id="oldProduction"> The province previously produce <b>0</b> resource units.</p>
 				<p id="newProduction"> The province will produce <b>0</b> resource units.</p>
-				<p id="changeProduction"> The difference in production is <b>0</b> resource units.</p>
+				<p id="changeProductionT"> The new upgrades produce <b>0</b> more resource units than the original.</p>
+				<p id="changeProductionN"> The new upgrades produce <b>0</b> more resource units than the current.</p>
 
 			</div>
         </div>
